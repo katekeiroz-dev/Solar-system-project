@@ -4,7 +4,7 @@ import utils.ScannerInput;
 
 public class PlanetObjectMenu {
 
-    public PlanetObjectMenu(){
+    public PlanetObjectMenu(){ //class constructor
 
         System.out.println("--------PLanet Object Menu ---------- ");
         System.out.println("|  1) Add a planet object \t |");
@@ -44,7 +44,6 @@ public class PlanetObjectMenu {
     private int requestUserData() {
         return ScannerInput.readNextInt("==>> ");
     }
-
 
 
 }
