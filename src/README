@@ -1,0 +1,139 @@
+
+/* readme.txt
+
+** EXAMPLE ONLY **
+** REPLACE THIS ENTIRE TEMPLATE WITH THE DETAILS IN RUBRIC
+******************
+
+Name :
+
+Student Number:
+
+Part A - Inheritance Hierarchy (x / 24)
+-----------------------------
+
+Planets (x/10)
+IcePlanet( x / 8)
+GasPlanet ( x / 8)
+
+
+Part B - PlanetSystemAPI  (X /34)
+-----------------------------
+basic CRUD (x /13 )
+reporting/numberOf methods (x / 8)
+validation methods  & persistence  (x / 5)
+sorting / top 5 (x / 8)
+
+
+Part C - UX (user experience) and Driver:Mark (X /23)
+-----------------------------
+Good Menu Structure  (x / 4)
+ArrayListCRUD  - all  types handled  (x / 7)
+Reports Menu - for all planets (x / 7)
+Search, Sort, top5   (x / 4)
+Save, Load, Exit   (x / 1)
+
+
+
+Part D - DX (Overall style) (11%)	 (X /11)
+-----------------------------
+Code correctly commented (x / 3)
+Standard naming, indentation, DRY Code etc. (x / 5)
+Javadoc written for PlanetSystemAPI  (x / 3)
+
+Part E - For Extra Credit (10%)  (x / 10)
+-----------------------------
+Please list the following for each extra functionality that you implemented
+     the extra functionality
+     what changes this lead to from spec given
+     where the extra implementation took place.
+
+
+Part F - Reflection (x / 8)
+-----------------------------
+Filled out parts A - D above (x / 3)
+
+Rest(x / 5)
+Chronology of my implementation (what I did first, etc.. )
+
+------------- Date (08 /05/2025) -------------
+I started writing the code after reading the project specification again and highlighting the main points of the assignment.
+I began with the Driver class, where I created the mainMenu() method to print the initial user information, which includes
+the menu of options. I used the println() method to display the menu messages.
+Then, within the runMainMenu() method, I implemented a switch statement to handle the options selected by the user, which
+are scanned and chosen through the mainMenu() method.
+Lastly, I created a new class called PlanetObjectMenu. Within its constructor, I implemented messages to the user using
+println(). I also created a separate method to handle user input using the Scanner class.
+
+Challenges :
+
+The challenge I faced today was implementing a way for the user to return to the main menu without having to restart
+the program.
+
+What I learned :
+I reviewed the concepts of interfaces and inheritance to ensure they were properly implemented throughout the program.
+
+------------- Date (10 /05/2025) -------------
+Today, I successfully implemented part of secondary menu in the application, enhancing the user interface and navigation
+experience. In addition, I began developing the essential model abstract classes, Planet. Within this class, I defined
+its key fields to represent relevant attributes , and implemented the corresponding getter and setter methods to ensure
+proper encapsulation and data access. This marks a solid step forward in structuring the app's core functionality and
+data flow.
+
+Challenges :
+
+While working on the secondary menu logic, I encountered a specific challenge involving the use of a switch statement
+within an infinite loop. The issue centered around how to correctly handle case 0, which serves as an exit option,
+without unintentionally affecting the other switch cases (which handle CRUD operations).
+
+Initial Approach; At first, I considered placing a break statement after all the switch cases. However, I quickly
+realized that doing so would exit the infinite loop no matter which case the user choose. This is not the case , because
+I only wanted to exit the infinite loop in case 0.
+
+
+Final Solution & Reasoning; After analyzing the structure, I understood that case 0 behaves fundamentally differently
+from the rest—it requires breaking out of the infinite loop, whereas the other cases only perform CRUD operations
+and continue looping.
+
+To solve this, I isolated the logic for case 0 and placed a break statement that directly exits the loop when selected.
+This allows the program to cleanly exit while maintaining the integrity of the other operations.
+
+What I learned :
+Today, I deepened my understanding of how to write more functional and well-structured code. Specifically, I learned
+how to properly define a class in Java, using correct syntax and best practices for readability and maintainability.
+I also gained a clearer understanding of modifiers, which define the access level and behavior of classes and their members.
+These include:
+
+public, private, protected – for access control
+
+static – to indicate class-level members
+
+final – to prevent modification or inheritance
+
+abstract – to declare a class that cannot be instantiated
+
+By applying these concepts, I was able to make my codebase more organized, encapsulated, and aligned with object-oriented
+principles.
+.
+
+------------- Date (12 /05/2025) -------------
+
+
+------------- Date (13 /05/2025) -------------
+
+
+Main difficulties I came across in your development of solution and how I solved them.
+
+Any bugs remaining in the solution or unfinished elements of spec (no need if you have detailed these in the rubric section)
+
+Main learnings from my engagement with assignment
+
+Mandatory : PLease list any references used in your development/ implementation of your submission.
+
+Please consider the following statements and choose one (delete the inappropriate one)
+
+- This is my work apart from the specific references noted above (and any code from class notes). I understand the code and can decribe any parts of the solution if needs be;
+
+- This is not all my own work - I'm not sure I understand what I am submitting.
+
+
