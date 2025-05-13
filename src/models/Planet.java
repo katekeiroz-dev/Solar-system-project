@@ -1,5 +1,7 @@
 package models;
 
+import utils.Utilities;
+
 public abstract class Planet {
 
    private int id = 0;
@@ -48,7 +50,7 @@ public abstract class Planet {
 
     public void setSurfaceType(String surfaceType) {
         
-        this.surfaceType = truncate(surfaceType, 20);
+        this.surfaceType = Utilities.truncateString(surfaceType,20);
     }
 
     public double getAverageTemperature() {
@@ -57,9 +59,11 @@ public abstract class Planet {
     }
 
     public void setAverageTemperature(double averageTemperature) {
-        if(averageTemperature >= -399 && averageTemperature <= 399 ){
+        // this if statement from below line ,replaces my previous manual implementation(see last commits)
+        if(Utilities.validRange(averageTemperature,-399, 399)){
             this.averageTemperature = averageTemperature;
         }
+
     }
 
     public double getMass() {
@@ -92,7 +96,7 @@ public abstract class Planet {
     }
 
     public void setName(String name) {
-        this.name = truncate(name, 30);
+        this.name = Utilities.truncateString(name , 30);
     }
 
     public double getDiameter() {
@@ -115,9 +119,9 @@ public abstract class Planet {
         return (this.mass * 6.67430e-11)/(Math.pow(this.diameter,2));
     }
 
-    public String truncate(String input, int maxLength) {
-        return input.length() <= maxLength ? input : input.substring(0, maxLength);
-    }
+    //public String truncate(String input, int maxLength) {
+      //  return input.length() <= maxLength ? input : input.substring(0, maxLength);
+    //}
 
 
 }

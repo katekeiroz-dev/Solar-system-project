@@ -50,6 +50,9 @@ public class Utilities {
      * @param max The maximum range number to check against (inclusive)
      * @return Returns true if the numberToCheck is between min and max (both inclusive), false otherwise.
      */
+
+    //three definitions of the same method?
+    // CLEAR EXAMPLE OF POLYMORPHISM
     public static boolean validRange(int numberToCheck, int min, int max) {
         return ((numberToCheck >= min) && (numberToCheck <= max));
     }

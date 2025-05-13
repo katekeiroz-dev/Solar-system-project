@@ -120,7 +120,36 @@ principles.
 
 
 ------------- Date (13 /05/2025) -------------
+Today, I focused on refactoring and enhancing code structure for better maintainability and adherence to object-oriented
+principles.
+I started by refactoring the Planet class to remove previously hardcoded logic. Instead, I integrated utility methods
+from the Utilities class, which made the code cleaner and more modular. This allowed for reusable logic and improved
+validation without duplicating code manually.
 
+Next, I implemented the GasPlanet class. This class extends Planet and adds specific properties relevant to gas planets,
+such as gasComposition, coreComposition, and radiationLevel. I made sure to:
+Initialize inherited fields through the superclass constructor.
+Add validation logic in the setters using utility methods like Utilities.truncateString() and Utilities.validRange().
+
+Use the CoreCompositionUtility.isValidCoreType() method to ensure valid core composition input.
+Override two methods from the Planet class: displayInfo() and classifyBody(), showcasing polymorphism in action.
+All class members were kept encapsulated, and Java best practices were followed regarding method structure and access
+control.
+
+Challenges:
+One challenge was ensuring that previously hardcoded logic in the Planet class was cleanly and correctly replaced with
+utility method calls without breaking the existing class behavior. It required careful comparison
+and testing to maintain the expected functionality.
+
+What I Learned:
+Today, I revisited several object-oriented programming concepts including:
+Polymorphism: Specifically, how method overriding works when a subclass redefines a method from its superclass.
+Encapsulation and validation: How to ensure class integrity by controlling data through getters/setters and utility
+methods.
+Static vs non-static context: I reviewed the differences between static variables and methods, and how/when to use them
+appropriately in a utility context.
+
+------
 
 Main difficulties I came across in your development of solution and how I solved them.
 

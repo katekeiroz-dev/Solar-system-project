@@ -27,8 +27,11 @@ public class CoreCompositionUtility {
     public static String getCoreDescription(String type) {
         //must not be case sensitive
         if(coreTypes.containsKey(type.toUpperCase()))
-            coreTypes.get(type);
+            return coreTypes.get(type);
 
         return "No Description for this type";
+
     }
+
 }
+
