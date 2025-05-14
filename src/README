@@ -101,7 +101,8 @@ This allows the program to cleanly exit while maintaining the integrity of the o
 What I learned :
 Today, I deepened my understanding of how to write more functional and well-structured code. Specifically, I learned
 how to properly define a class in Java, using correct syntax and best practices for readability and maintainability.
-I also gained a clearer understanding of modifiers, which define the access level and behavior of classes and their members.
+I also gained a clearer understanding of modifiers, which define the access level and behavior of classes and their
+members.
 These include:
 
 public, private, protected – for access control
@@ -148,6 +149,36 @@ Encapsulation and validation: How to ensure class integrity by controlling data 
 methods.
 Static vs non-static context: I reviewed the differences between static variables and methods, and how/when to use them
 appropriately in a utility context.
+
+------------- Date (14 /05/2025) -------------
+
+Today, I focused on improving the structure and reusability of the code in the Driver class, particularly around the
+menu systems. I realized that several blocks of logic—such as displaying menus or handling repeated menu options—could
+be abstracted into dedicated methods rather than being hardcoded. By refactoring these parts of the code, I made the
+Driver class cleaner, more modular, and easier to maintain.
+
+After that, I began working on the PlanetSystemAPI class in the controllers package. This involved setting up the class
+to manage the planet objects and defining the necessary logic to support CRUD operations from the main application.
+
+Challenges Faced:
+
+One key challenge I encountered was understanding how to implement XML file handling within the API. Since I intend
+to use XML for persistent data storage, I needed to familiarize myself with XML parsing in Java and how it integrates
+with serialization and file I/O. This required some additional reading and revision, especially regarding the use of
+interfaces and how they can be leveraged to standardize the save/load mechanisms across the system.
+
+What I Learned:
+
+Refactoring for Reusability: I saw firsthand how even small improvements in code structure, like moving hardcoded
+logic into helper methods, can greatly enhance readability and maintainability.
+Interfaces in Java: I deepened my understanding of Java interfaces and how they can enforce consistency across
+different implementations (e.g., for serialization).
+Working with XML Files: I began exploring how XML can be used for structured data storage in Java applications, and
+learned more about the parsing and writing process.
+Object-Oriented Best Practices: This work reinforced my knowledge of modularity, separation of concerns, and using
+utility classes to reduce code duplication.
+
+
 
 ------
 

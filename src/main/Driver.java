@@ -18,11 +18,11 @@ public class Driver {
     public void start() {
     //TODO - construct fields
 
-    //TODO - load all data once the serializers are set up
+    //load all data once the serializers are set up
     runMainMenu();
 }
-//TODO - construct menus
-
+//construct menus
+// write menu that user will see
     private int mainMenu() {
         System.out.println("--------Space Place ---------- ");
         System.out.println("|  1) Planets CRUD MENU \t |");
@@ -44,11 +44,7 @@ public class Driver {
         System.out.println("| -------------------------- |");
 
 
-
-
-        //TODO write menu that user will see
         return ScannerInput.readNextInt("==>> ");
-
     }
 
 
@@ -61,8 +57,8 @@ public class Driver {
                 break;
                 //planet CRUD case
             case 1:
-                PlanetObjectMenu planetObjectMenu = new PlanetObjectMenu(); //calling the constructor
-                planetObjectMenu.displayMenu(); //calling the method
+                runPlanetAPIMenu();
+
                 //at this point we got back from planetObjectMenu class
                 //in order to execute again this menu, we call runMainMenu
                 runMainMenu();
@@ -93,9 +89,55 @@ public class Driver {
                 break;
 
         }
-        //TODO - write code to call appropiate method based on value in option
+
         exitApp();
     }
+
+    private void runPlanetAPIMenu(){
+        int option = planetAPIMenu();
+        switch (option) {
+            case 0:
+                break;
+            //add a planet
+            case 1:
+
+                break;
+            // delete a planet
+            case 2:
+                System.out.println("User pressed 2");
+                break;
+            // list all planets
+            case 3:
+                System.out.println("User pressed 3");
+                break;
+            //update planet
+            case 4:
+                System.out.println("User pressed 4");
+                break;
+
+            default:
+                System.out.println("Invalid option. Please choose one of the following options:(1, 2, 3, 4, 0).");
+                break;
+        }
+
+    }
+
+    private int planetAPIMenu(){
+        System.out.println("--------PLanet Object Menu ------- ");
+        System.out.println("|  1) Add a planet object \t \t |");
+        System.out.println("|  2) Delete a planet object \t |");
+        System.out.println("|  3) List all Planet object \t |");
+        System.out.println("|  4) Update planet object \t\t |");
+        System.out.println("|  0) Return to main menu \t\t |");
+        System.out.println("| ------------------------------ |");
+
+        return ScannerInput.readNextInt("==>> ");
+    }
+
+    private void addPlanet(){
+
+    }
+
 
     private void exitApp() {
 
