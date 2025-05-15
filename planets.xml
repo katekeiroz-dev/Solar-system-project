@@ -10,3 +10,13 @@
   <coreComposition>d</coreComposition>
   <radiationLevel>22.0</radiationLevel>
 </models.GasPlanet>
+<models.IcePlanet>
+  <id>1000</id>
+  <hasLiquidWater>false</hasLiquidWater>
+  <surfaceType>s</surfaceType>
+  <averageTemperature>22.0</averageTemperature>
+  <mass>2.0</mass>
+  <name>d</name>
+  <diameter>22.0</diameter>
+  <iceComposition>ss</iceComposition>
+</models.IcePlanet>

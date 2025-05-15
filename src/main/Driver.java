@@ -3,6 +3,7 @@ package main;
 import controllers.PlanetSystemAPI;
 
 import models.GasPlanet;
+import models.IcePlanet;
 import utils.ScannerInput;
 import utils.Utilities;
 
@@ -156,6 +157,14 @@ public class Driver {
 
         if (gasOrIce.equals("ICE")){
             String iceComp = ScannerInput.readNextLine("What is the ice composition? : ");
+            IcePlanet icePlanet = new IcePlanet(name,mass,diameter,avgTemp,surfaceType,hw,iceComp);
+
+            try {
+                planetAPI.addPlanetObject(icePlanet);
+            } catch (IOException e) {
+                System.out.println("Error while attempting to add ice planet.");
+                e.printStackTrace();
+            }
 
 
         } else if (gasOrIce.equals("GAS")) {
