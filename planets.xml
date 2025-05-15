@@ -1,0 +1,12 @@
+<models.GasPlanet>
+  <id>1000</id>
+  <hasLiquidWater>false</hasLiquidWater>
+  <surfaceType>s</surfaceType>
+  <averageTemperature>2.0</averageTemperature>
+  <mass>11.0</mass>
+  <name>s</name>
+  <diameter>11.0</diameter>
+  <gasComposition>s</gasComposition>
+  <coreComposition>d</coreComposition>
+  <radiationLevel>22.0</radiationLevel>
+</models.GasPlanet>

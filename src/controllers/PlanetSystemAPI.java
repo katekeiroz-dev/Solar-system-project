@@ -17,13 +17,7 @@ import java.io.IOException;
 //So, PlanetSystemAPI must provide concrete implementations of all methods defined in the ISerializer interface.
 public class PlanetSystemAPI implements ISerializer{
 
-    public static class Pessoa {
-        private String nome;
 
-        public Pessoa(String nome) {
-            this.nome = nome;
-        }
-    }
 
     private File file = null;
     private List<Planet> planetList = new ArrayList<>();
@@ -49,13 +43,13 @@ public class PlanetSystemAPI implements ISerializer{
     // Exception is the most general one.
     // This informs that this method may throw an IO exception
     public boolean addPlanetObject(Planet planet) throws IOException{
-        Pessoa pessoa = new Pessoa("Joao");
+
         XStream xstream = new XStream();
         xstream.alias("planet" , Planet.class);
 
         File file = new File("planets.xml");
         FileWriter fileWriter = new FileWriter(file,true);
-        xstream.toXML(pessoa,fileWriter);
+        xstream.toXML(planet,fileWriter);
         fileWriter.write(System.lineSeparator());
         fileWriter.close();
         return false;

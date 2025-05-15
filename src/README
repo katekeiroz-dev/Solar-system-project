@@ -177,6 +177,37 @@ Working with XML Files: I began exploring how XML can be used for structured dat
 learned more about the parsing and writing process.
 Object-Oriented Best Practices: This work reinforced my knowledge of modularity, separation of concerns, and using
 utility classes to reduce code duplication.
+------------- Date (15 /05/2025) -------------
+
+Today I began by focusing on attention to the PlanetSystemAPI class, where I began implementing the logic for persisting
+planet data using XML. I created a method called addPlanetObject, which uses the XStream library to serialize Planet
+objects and write them to a file named planets.xml.
+While implementing this, I deepened my understanding of Java I/O operations and how checked exceptions like IOException
+need to be properly declared and handled. I also revisited the concept of aliases in XStream to control how objects are
+represented in XML.
+In conjunction with this, I expanded the addPlanet() method in the Driver class. This method now collects user input to
+construct either a generic planet or a specific type (like GasPlanet), based on user responses.
+If the user selects "GAS", the system prompts for additional attributes such as gas composition, core composition, and
+radiation level. The resulting GasPlanet object is then passed to planetAPI.addPlanetObject() for persistence.
+
+Challenges Faced
+One of the main challenges I encountered today was integrating XML file handling into the API layer. Understanding
+how XStream works for serializing objects, especially when appending to existing XML files, required additional
+research. Managing I/O exceptions and ensuring resources like FileWriter were properly closed also demanded attention.
+
+What I Learned
+-Refactoring for Reusability: Breaking down large methods into smaller, reusable units improves readability and
+supports easier maintenance.
+-Java I/O and XML: Gained practical experience with XML serialization in Java using XStream, and handling file
+operations with FileWriter.
+-Interfaces and Consistency: Started thinking ahead about using interfaces to enforce consistency in save/load methods
+across different planet types.
+-Robust Error Handling: Recognized the importance of catching and logging exceptions to prevent application crashes and
+aid in debugging.
+
+
+
+
 
 
 

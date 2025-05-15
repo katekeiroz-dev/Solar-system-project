@@ -2,9 +2,13 @@ package main;
 
 import controllers.PlanetSystemAPI;
 
+import models.GasPlanet;
 import utils.ScannerInput;
+import utils.Utilities;
+
 
 import java.io.File;
+import java.io.IOException;
 
 public class Driver {
 
@@ -16,7 +20,7 @@ public class Driver {
         new Driver().start();
     }
     public void start() {
-    //TODO - construct fields
+        planetAPI = new PlanetSystemAPI();
 
     //load all data once the serializers are set up
     runMainMenu();
@@ -100,6 +104,7 @@ public class Driver {
                 break;
             //add a planet
             case 1:
+                addPlanet();
 
                 break;
             // delete a planet
@@ -131,13 +136,63 @@ public class Driver {
         System.out.println("|  0) Return to main menu \t\t |");
         System.out.println("| ------------------------------ |");
 
+
         return ScannerInput.readNextInt("==>> ");
     }
 
-    private void addPlanet(){
+    private void addPlanet() {
+
+        String name =  ScannerInput.readNextLine("What is the name of the planet? : ");
+        String surfaceType =  ScannerInput.readNextLine("What is the surface type of the planet? : ");
+        double diameter =  ScannerInput.readNextDouble("Inform the diameter of the planet? : ");
+        char hasLiquidWater =  ScannerInput.readNextChar("Does it have liquid Water?(Type Y for yes or N of No) : ");
+        double mass =  ScannerInput.readNextDouble(" Inform the mass of the planet? : ");
+        double avgTemp =  ScannerInput.readNextDouble(" What is the average temperature of the planet? : ");
+
+        boolean hw = Utilities.YNtoBoolean(hasLiquidWater);
+        String gasOrIce =  ScannerInput.readNextLine("Is it part of the Ice or Gas planets? : ").toUpperCase();
+
+       // System.out.println(name + " " + surfaceType + diameter + hasLiquidWater + mass + avgTemp + gasOrIce);
+
+        if (gasOrIce.equals("ICE")){
+            String iceComp = ScannerInput.readNextLine("What is the ice composition? : ");
+
+
+        } else if (gasOrIce.equals("GAS")) {
+            String gasComp = ScannerInput.readNextLine("What is the gas composition? : ");
+            String coreComp = ScannerInput.readNextLine("What is the core composition? : ");
+            double radLevel = ScannerInput.readNextDouble("What is the radiation level? : ");
+            GasPlanet gasPlanet= new GasPlanet(name,mass,diameter,avgTemp,surfaceType,hw,gasComp,coreComp,radLevel);
+
+            try{
+                planetAPI.addPlanetObject(gasPlanet);
+            }
+            catch (IOException e){
+                System.out.println("Error while attempting to add planet.");
+                e.printStackTrace();
+
+            }
+
+
+
+        }else {
+            System.out.println("Sorry, invalid information.");
+            planetAPIMenu();
+
+        }
 
     }
+      /*  try{
+           planetAPI.addPlanetObject();
 
+
+        }
+    catch (IOException e){
+
+        }
+
+   }
+    */
 
     private void exitApp() {
 
