@@ -1,6 +1,7 @@
 package controllers;
 
 
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.Planet;
 import utils.ISerializer;
 
@@ -26,16 +27,35 @@ public class PlanetSystemAPI implements ISerializer{
     //throws Exception means the method might throw an Exception (an error) that must be handled
     @Override
     public void load() throws Exception {
+        File file = new File("planets.xml");
 
+        if (file.exists()) {
+            XStream xstream = new XStream(new DomDriver());
+            xstream.alias("planet", Planet.class);
+            xstream.alias("planets", List.class);
+
+            this.planetList = (List<Planet>) xstream.fromXML(file);
+        } else {
+            System.err.println("Arquivo 'planets.xml' não encontrado.");
+
+        }
     }
 
     @Override
     public void save() throws Exception {
+        File file = new File("planets.xml");
+
+        XStream xstream = new XStream(new DomDriver());
+        xstream.alias("planet", Planet.class);
+        xstream.alias("planets", List.class);  // <planets> será a tag raiz
+        xstream.toXML(planetList, new FileWriter(file));
 
     }
 
     @Override
     public String fileName() {
+
+
         return "";
     }
 
@@ -44,14 +64,8 @@ public class PlanetSystemAPI implements ISerializer{
     // This informs that this method may throw an IO exception
     public boolean addPlanetObject(Planet planet) throws IOException{
 
-        XStream xstream = new XStream();
-        xstream.alias("planet" , Planet.class);
+        planetList.add(planet);
 
-        File file = new File("planets.xml");
-        FileWriter fileWriter = new FileWriter(file,true);
-        xstream.toXML(planet,fileWriter);
-        fileWriter.write(System.lineSeparator());
-        fileWriter.close();
         return false;
     }
 

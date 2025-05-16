@@ -1,22 +1,12 @@
-<models.GasPlanet>
-  <id>1000</id>
-  <hasLiquidWater>false</hasLiquidWater>
-  <surfaceType>s</surfaceType>
-  <averageTemperature>2.0</averageTemperature>
-  <mass>11.0</mass>
-  <name>s</name>
-  <diameter>11.0</diameter>
-  <gasComposition>s</gasComposition>
-  <coreComposition>d</coreComposition>
-  <radiationLevel>22.0</radiationLevel>
-</models.GasPlanet>
-<models.IcePlanet>
-  <id>1000</id>
-  <hasLiquidWater>false</hasLiquidWater>
-  <surfaceType>s</surfaceType>
-  <averageTemperature>22.0</averageTemperature>
-  <mass>2.0</mass>
-  <name>d</name>
-  <diameter>22.0</diameter>
-  <iceComposition>ss</iceComposition>
-</models.IcePlanet>
+<planets>
+  <models.IcePlanet>
+    <id>1000</id>
+    <hasLiquidWater>false</hasLiquidWater>
+    <surfaceType>po</surfaceType>
+    <averageTemperature>23.0</averageTemperature>
+    <mass>22.0</mass>
+    <name>oo</name>
+    <diameter>23.0</diameter>
+    <iceComposition>yy</iceComposition>
+  </models.IcePlanet>
+</planets>

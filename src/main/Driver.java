@@ -82,11 +82,13 @@ public class Driver {
                 break;
                 //save all case
             case 10:
-                System.out.println("User pressed 10");
+                saveAllData();
+                runMainMenu();
                 break;
                 //load all
             case 11:
-                System.out.println("User pressed 11");
+                loadAllData();
+                runMainMenu();
                 break;
             default:
                 System.out.println("Invalid number .Please choose one of the following options:(1, 2, 3, 4, 10, 11, 0).");
@@ -209,6 +211,36 @@ public class Driver {
         System.exit(0);
     }
 
+    private void loadAllData()  {
+        try{
+            planetAPI.load();
+
+        }
+        catch (Exception e){
+
+        }
+
+    }
+
+    private void saveAllData() {
+        try{
+            planetAPI.save();
+
+        }
+        catch (Exception e){
+
+        }
+
+    }
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -233,5 +265,4 @@ public class Driver {
 //TODO- write any helper methods that are required
 
 
-}
 

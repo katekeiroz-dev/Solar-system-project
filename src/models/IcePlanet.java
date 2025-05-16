@@ -1,6 +1,6 @@
 package models;
 
-import utils.CoreCompositionUtility;
+
 import utils.Utilities;
 
 public class IcePlanet extends Planet {
