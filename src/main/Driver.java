@@ -79,15 +79,17 @@ public class Driver {
                 // reports MENU case
             case 2:
                 runReportsMenu();
-                reportsMenu();
+                runMainMenu();
                 break;
                 // search planet case
             case 3:
                 System.out.println("User pressed 3");
+                runMainMenu();
                 break;
                 //sort planet case
             case 4:
                 System.out.println("User pressed 4");
+                runMainMenu();
                 break;
                 //save all case
             case 10:
@@ -135,10 +137,12 @@ public class Driver {
 
             default:
                 System.out.println("Invalid option. Please choose one of the following options:(1, 2, 3, 4, 0).");
+                runPlanetAPIMenu();
                 break;
         }
 
     }
+
 //Shows a submenu for planet-related actions (Add, Delete, List, Update).
 //Returns user's choice.
     private int planetAPIMenu(){
@@ -178,15 +182,17 @@ public class Driver {
             String iceComp = ScannerInput.readNextLine("What is the ice composition? : ");
             IcePlanet icePlanet = new IcePlanet(name,mass,diameter,avgTemp,surfaceType,hw,iceComp);
 
+
             try {
                 planetAPI.addPlanetObject(icePlanet);
             } catch (IOException e) {
                 System.out.println("Error while attempting to add ice planet.");
                 e.printStackTrace();
             }
+            System.out.println(" Ice Planet added successfully! ");
 
-
-        } else if (gasOrIce.equals("GAS")) {
+        }
+        else if (gasOrIce.equals("GAS")) {
             String gasComp = ScannerInput.readNextLine("What is the gas composition? : ");
             String coreComp = ScannerInput.readNextLine("What is the core composition? : ");
             double radLevel = ScannerInput.readNextDouble("What is the radiation level? : ");
@@ -194,33 +200,42 @@ public class Driver {
 
             try{
                 planetAPI.addPlanetObject(gasPlanet);
+
             }
             catch (IOException e){
                 System.out.println("Error while attempting to add planet.");
                 e.printStackTrace();
 
             }
+            System.out.println("Gas Planet added successfully! ");
 
-
-
-        }else {
-            System.out.println("Sorry, invalid information.");
-            planetAPIMenu();
 
         }
+        else {
+            System.out.println("Sorry, invalid information.");
+
+
+        }
+        goBackToMainOrCrudMenu();
 
     }
-      /*  try{
-           planetAPI.addPlanetObject();
 
+    private void goBackToMainOrCrudMenu(){
+        System.out.println("Please choose an option of the menu you would like to return : \n1) Main Menu \n2)Planets CRUD Menu");
+        int option = ScannerInput.readNextInt("===>");
+        if (option == 1){
+            runMainMenu();
+
+        } else if (option == 2) {
+            runPlanetAPIMenu();
+
+        }else {
+            System.out.println("Invalid option. Please choose one of the following options:(1, 2).");
+            goBackToMainOrCrudMenu();
 
         }
-    catch (IOException e){
+    }
 
-        }
-
-   }
-    */
 
     private void exitApp() {
 
@@ -270,23 +285,62 @@ public class Driver {
                    runMainMenu();
                     break;
                 case 1:
-                    System.out.println("Showing Planet Overview...");
-                    mainMenu();
+
+                    runPlanetReportsMenu();
                     break;
 
                 default:
                     System.out.println("Invalid number. Please choose one of the following options: (1, 0).");
-
-        } planetAPIMenu();
+                    runReportsMenu();
+                    break;
+        }
     }
 
     private void runPlanetReportsMenu() {
+        int option = planetReportsMenu();
+        switch (option){
+            case 0:
+                runReportsMenu();
+                break;
+            case 1:
+                listAllPlanetSmallerThan();
+                break;
+            case 2:
+                //  ask the user's input
+                double minimumMass = ScannerInput.readNextDouble("Enter minimum mass:  ");
+                listAllPlanetHeavierThan(minimumMass);
+                break;
+            case 3:
+                listAllIcePlanets();
+                break;
+            case 4:
+                listAllGasPlanets();
+                break;
+            case 5:
+                listAllPlanetBodies();
+                break;
+
+            default:
+                System.out.println("Invalid number. Please choose one of the following options: (1, 2, 3, 4, 5, 0).");
+                runPlanetReportsMenu();
+                break;
+        }
+
 
     }
 
 
     private int planetReportsMenu() {
-     return (0);
+        System.out.println("------ Planet Reports Submenu -------");
+        System.out.println("| 1) List all planets smaller than X |");
+        System.out.println("| 2) List all planets heavier than X |");
+        System.out.println("| 3) List all ICE planets            |");
+        System.out.println("| 4) List all GAS planets            |");
+        System.out.println("| 5) List all planets                |");
+        System.out.println("| 0) Back to Reports Menu            |");
+        System.out.println("-------------------------------------");
+
+        return ScannerInput.readNextInt("==>> ");
     }
 
     public void listAllPlanetSmallerThan() {
@@ -294,8 +348,22 @@ public class Driver {
     }
 
 
-    public void listAllPlanetHeavierThan() {
+    public void listAllPlanetHeavierThan(double m) {
 
+        System.out.println(planetAPI.listAllPlanetObjectsHeavierThan(m));
+
+    }
+
+    public void listAllIcePlanets(){
+        System.out.println(planetAPI.listAllIcePlanets());
+    }
+
+    public void listAllGasPlanets(){
+        System.out.println(planetAPI.listAllGasPlanets());
+    }
+
+    public void listAllPlanetBodies(){
+        System.out.println(planetAPI.listAllPlanetBodies());
     }
 
 
