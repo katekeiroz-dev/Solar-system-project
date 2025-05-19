@@ -2,11 +2,11 @@
   <models.IcePlanet>
     <id>1000</id>
     <hasLiquidWater>false</hasLiquidWater>
-    <surfaceType>po</surfaceType>
-    <averageTemperature>23.0</averageTemperature>
+    <surfaceType>marte</surfaceType>
+    <averageTemperature>22.0</averageTemperature>
     <mass>22.0</mass>
-    <name>oo</name>
-    <diameter>23.0</diameter>
-    <iceComposition>yy</iceComposition>
+    <name>ss</name>
+    <diameter>22.0</diameter>
+    <iceComposition>ss</iceComposition>
   </models.IcePlanet>
 </planets>

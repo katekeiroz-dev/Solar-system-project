@@ -23,6 +23,18 @@ public abstract class Planet {
 
         this.id = nextId++;
     }
+//super.toString() gets the base Planet info
+//Appends extra fields for the specific subclass
+    @Override
+    public String toString() {
+        return "Name: " + name +
+                ", Mass: " + mass +
+                ", Diameter: " + diameter +
+                ", AvgTemp: " + averageTemperature +
+                ", Surface: " + surfaceType +
+                ", HasWater: " + hasLiquidWater;
+    }
+
 
     public int getId() {
 

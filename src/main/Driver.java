@@ -16,18 +16,25 @@ public class Driver {
 
     private PlanetSystemAPI planetAPI;
 
-
+//The entry point of your app.
+//Creates a new Driver object and calls its start() method.
     public static void main(String[] args) throws Exception {
         new Driver().start();
     }
     public void start() {
-        planetAPI = new PlanetSystemAPI();
+        planetAPI = new PlanetSystemAPI(); //Initializes the planetAPI
 
     //load all data once the serializers are set up
+   // Calls runMainMenu() to show the main menu to the user.
     runMainMenu();
-}
+    }
+
+
+
+
 //construct menus
-// write menu that user will see
+    // Displays the main menu options to the user
+    //Asks the user to choose an option and returns their choice.
     private int mainMenu() {
         System.out.println("--------Space Place ---------- ");
         System.out.println("|  1) Planets CRUD MENU \t |");
@@ -52,7 +59,8 @@ public class Driver {
         return ScannerInput.readNextInt("==>> ");
     }
 
-
+    //Calls mainMenu() to get user's choice
+    // Uses a switch statement to perform the right action
     private void runMainMenu() {
         int option = mainMenu();
         switch (option){
@@ -70,7 +78,8 @@ public class Driver {
                 break;
                 // reports MENU case
             case 2:
-                System.out.println("User pressed 2");
+                runReportsMenu();
+                reportsMenu();
                 break;
                 // search planet case
             case 3:
@@ -100,6 +109,7 @@ public class Driver {
         exitApp();
     }
 
+    //Handles the logic based on user input from planetAPIMenu()
     private void runPlanetAPIMenu(){
         int option = planetAPIMenu();
         switch (option) {
@@ -129,7 +139,8 @@ public class Driver {
         }
 
     }
-
+//Shows a submenu for planet-related actions (Add, Delete, List, Update).
+//Returns user's choice.
     private int planetAPIMenu(){
         System.out.println("--------PLanet Object Menu ------- ");
         System.out.println("|  1) Add a planet object \t \t |");
@@ -143,6 +154,11 @@ public class Driver {
         return ScannerInput.readNextInt("==>> ");
     }
 
+
+    //Collects details from the user to create a new planet
+    //Asks if the planet is an "ICE" or "GAS" type
+    //If "ICE": Creates an IcePlanet and adds it via planetAPI
+    //If "GAS": Creates a GasPlanet and adds it via planetAPI
     private void addPlanet() {
 
         String name =  ScannerInput.readNextLine("What is the name of the planet? : ");
@@ -152,7 +168,8 @@ public class Driver {
         double mass =  ScannerInput.readNextDouble(" Inform the mass of the planet? : ");
         double avgTemp =  ScannerInput.readNextDouble(" What is the average temperature of the planet? : ");
 
-        boolean hw = Utilities.YNtoBoolean(hasLiquidWater);
+
+        boolean hw = Utilities.YNtoBoolean(hasLiquidWater);//to convert "Y/N" to true/false
         String gasOrIce =  ScannerInput.readNextLine("Is it part of the Ice or Gas planets? : ").toUpperCase();
 
        // System.out.println(name + " " + surfaceType + diameter + hasLiquidWater + mass + avgTemp + gasOrIce);
@@ -232,6 +249,53 @@ public class Driver {
         }
 
     }
+
+
+    private int reportsMenu(){
+        System.out.println("----------Reports  Menu ------- ");
+        System.out.println("|  1) Planets Overview  \t \t |");
+        System.out.println("|  0) Return to main menu \t\t |");
+        System.out.println("| ------------------------------ |");
+
+        return ScannerInput.readNextInt("==>> ");
+    }
+
+
+
+
+    public void runReportsMenu() {
+        int option = reportsMenu();
+        switch (option) {
+                case 0:
+                   runMainMenu();
+                    break;
+                case 1:
+                    System.out.println("Showing Planet Overview...");
+                    mainMenu();
+                    break;
+
+                default:
+                    System.out.println("Invalid number. Please choose one of the following options: (1, 0).");
+
+        } planetAPIMenu();
+    }
+
+    private void runPlanetReportsMenu() {
+
+    }
+
+
+    private int planetReportsMenu() {
+     return (0);
+    }
+
+    public void listAllPlanetSmallerThan() {
+
+    }
+
+
+    public void listAllPlanetHeavierThan() {
+
     }
 
 
@@ -239,8 +303,7 @@ public class Driver {
 
 
 
-
-
+}
 
 
 

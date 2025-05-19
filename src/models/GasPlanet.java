@@ -61,6 +61,16 @@ public class  GasPlanet extends Planet {
     public void classifyBody() {
 
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", GasComposition: " + gasComposition +
+                ", CoreComposition: " + coreComposition +
+                ", RadiationLevel: " + radiationLevel;
+    }
+
+
 }
 
 

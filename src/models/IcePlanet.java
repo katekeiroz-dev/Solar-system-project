@@ -35,4 +35,12 @@ public class IcePlanet extends Planet {
     public void classifyBody() {
 
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", IceComposition: " + iceComposition;
+    }
+
+
+
 }
