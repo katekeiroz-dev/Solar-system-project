@@ -106,16 +106,12 @@ members.
 These include:
 
 public, private, protected – for access control
-
 static – to indicate class-level members
-
 final – to prevent modification or inheritance
-
 abstract – to declare a class that cannot be instantiated
+By applying these concepts, I was able to make my codebase more organized, encapsulated, and aligned with
+object-oriented principles.
 
-By applying these concepts, I was able to make my codebase more organized, encapsulated, and aligned with object-oriented
-principles.
-.
 
 
 

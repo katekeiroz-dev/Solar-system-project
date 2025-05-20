@@ -1,12 +1,34 @@
 <planets>
-  <models.IcePlanet>
+  <icePlanet>
     <id>1000</id>
     <hasLiquidWater>false</hasLiquidWater>
-    <surfaceType>marte</surfaceType>
+    <surfaceType>kate</surfaceType>
     <averageTemperature>22.0</averageTemperature>
     <mass>22.0</mass>
-    <name>ss</name>
+    <name>ssw</name>
     <diameter>22.0</diameter>
-    <iceComposition>ss</iceComposition>
-  </models.IcePlanet>
+    <iceComposition>ww</iceComposition>
+  </icePlanet>
+  <gasPlanet>
+    <id>1001</id>
+    <hasLiquidWater>false</hasLiquidWater>
+    <surfaceType>liam</surfaceType>
+    <averageTemperature>11.0</averageTemperature>
+    <mass>11.0</mass>
+    <name>oo</name>
+    <diameter>11.0</diameter>
+    <gasComposition>kk</gasComposition>
+    <coreComposition>ii</coreComposition>
+    <radiationLevel>11.0</radiationLevel>
+  </gasPlanet>
+  <icePlanet>
+    <id>1002</id>
+    <hasLiquidWater>false</hasLiquidWater>
+    <surfaceType>chloe</surfaceType>
+    <averageTemperature>99.0</averageTemperature>
+    <mass>0.1</mass>
+    <name>aa</name>
+    <diameter>99.0</diameter>
+    <iceComposition>oo</iceComposition>
+  </icePlanet>
 </planets>

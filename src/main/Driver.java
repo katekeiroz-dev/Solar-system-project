@@ -83,12 +83,12 @@ public class Driver {
                 break;
                 // search planet case
             case 3:
-                System.out.println("User pressed 3");
+                String s = planetAPI.listAllPlanetBodies();
                 runMainMenu();
                 break;
                 //sort planet case
             case 4:
-                System.out.println("User pressed 4");
+                planetAPI.sortByDiameterAscending();
                 runMainMenu();
                 break;
                 //save all case

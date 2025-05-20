@@ -40,34 +40,68 @@ public class PlanetSystemAPI implements ISerializer{
     @Override
     public void load() throws Exception {
 
-        //TODO: FIX BUG HEREEE
 
         File file = new File("planets.xml");
 
         if (file.exists()) {
+            //What is DomDriver() in XStream?
+            //DomDriver is one of the XML parsers used by XStream to read and write XML.
+            //tells XStream to use DOM (Document Object Model) for parsing and generating XML. It creates an internal
+            // tree structure of the XML document — kind of like a full in-memory representation — which makes it
+            // easier to navigate and manipulate
             XStream xstream = new XStream(new DomDriver());
+
+            // Aliases must match what was used in save()
+            xstream.alias("icePlanet", IcePlanet.class);
+            xstream.alias("gasPlanet", GasPlanet.class);
             xstream.alias("planet", Planet.class);
             xstream.alias("planets", List.class);
 
-            this.planetList = (List<Planet>) xstream.fromXML(file);
+            Object result = xstream.fromXML(file);
+
+            if (result instanceof List<?>) {
+                this.planetList = (List<Planet>) result;
 
 
+                // Debugging
+                // It checks if the list is empty (has no planets)
+                // if yes: (That means the XML didn't load any planets.)
+            /*
+            if (planetList.isEmpty()) {
+                System.out.println("[DEBUG] planetList is empty.");
+            } else { // Otherwise (if the list is not empty), it prints out the number of planets and each one
+                System.out.println("[DEBUG] Loaded " + planetList.size() + " planets:");
+                for (Planet p : planetList) {
+                    System.out.println("[DEBUG] " + p); // it prints each planet in the list
+                }
+            }
+            */
+            //} else {
+                // If the data loaded from the file is not a List, this prints an error message.
+                // This helps you know that the XML file is structured wrong or corrupted
+                // System.err.println("[DEBUG] Unexpected XML structure");
+            }
         } else {
-            System.err.println("Arquivo 'planets.xml' não encontrado.");
-
+            System.err.println("File 'planets.xml' not found.");
         }
     }
 
     @Override
-    public void save() throws Exception {
-        File file = new File("planets.xml");
+    public void save() throws Exception {File file = new File("planets.xml");
 
         XStream xstream = new XStream(new DomDriver());
-        xstream.alias("planet", Planet.class);
-        xstream.alias("planets", List.class);  // <planets> será a tag raiz
-        xstream.toXML(planetList, new FileWriter(file));
 
+        // Aliases for subclasses of Planet
+        xstream.alias("icePlanet", IcePlanet.class);
+        xstream.alias("gasPlanet", GasPlanet.class);
+        xstream.alias("planet", Planet.class);   // optional
+        xstream.alias("planets", List.class);    // root tag
+
+        xstream.setMode(XStream.NO_REFERENCES);  // optional: cleaner XML
+
+        xstream.toXML(planetList, new FileWriter(file));
     }
+
 
     @Override
     public String fileName() {
@@ -252,6 +286,9 @@ public class PlanetSystemAPI implements ISerializer{
         return true;
     }
 
+    public boolean isValidIndex(int index) {
+        return index >= 0 && index < planetList.size();
+    }
 
     //-------- Update Methods -------------------------------
 
@@ -290,9 +327,6 @@ public class PlanetSystemAPI implements ISerializer{
         // instead of writing a full lambda expression -> etc
     }
 
-    public void sortByDiameterDescending() {
-        planetList.sort(Comparator.comparingDouble(Planet::getDiameter).reversed());
-    }
 
     //This method swaps two planets in a list — it switches their positions.
     private void swapPlanet(List<Planet> list, int i, int j) {
@@ -323,15 +357,6 @@ public class PlanetSystemAPI implements ISerializer{
                 .map(Object::toString)
                 .collect(Collectors.joining("\n"));
     }
-
-
-
-
-
-
-
-    // TODO Persistence methods
-
 
 
 }   
