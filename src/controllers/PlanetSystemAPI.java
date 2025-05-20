@@ -25,13 +25,6 @@ public class PlanetSystemAPI implements ISerializer{
 
 
 
-    //TODO Create a list to store the Planets - done
-    //TODO create a File field to story filename - done
-
-    //TODO create constructor to initialise filename and instantiate the planets list
-
-
-
     private File file = null;
     private List<Planet> planetList = new ArrayList<>();
 

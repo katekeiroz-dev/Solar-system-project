@@ -61,8 +61,10 @@ public abstract class Planet {
     }
 
     public void setSurfaceType(String surfaceType) {
-        
-        this.surfaceType = Utilities.truncateString(surfaceType,20);
+
+        if (Utilities.isValidSurfaceType(surfaceType)) {
+            this.surfaceType = Utilities.truncateString(surfaceType, 20);
+        }
     }
 
     public double getAverageTemperature() {
@@ -134,6 +136,7 @@ public abstract class Planet {
     //public String truncate(String input, int maxLength) {
       //  return input.length() <= maxLength ? input : input.substring(0, maxLength);
     //}
+
 
 
 }

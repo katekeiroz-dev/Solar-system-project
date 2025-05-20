@@ -89,4 +89,17 @@ public class Utilities {
     public static boolean isValidIndex(List list, int indexToCheck){
         return ((indexToCheck >= 0) && (indexToCheck < list.size()));
     }
+
+    public static boolean isValidSurfaceType(String type) {
+        String[] validTypes = {"rocky", "volcanic", "metallic"};
+        for (String valid : validTypes) {
+            if (valid.equalsIgnoreCase(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
+
+
