@@ -43,11 +43,13 @@ public class PlanetSystemAPI implements ISerializer{
             // tree structure of the XML document — kind of like a full in-memory representation — which makes it
             // easier to navigate and manipulate
             XStream xstream = new XStream(new DomDriver());
+            xstream.autodetectAnnotations(true);
+
 
             // Aliases must match what was used in save()
             xstream.alias("icePlanet", IcePlanet.class);
             xstream.alias("gasPlanet", GasPlanet.class);
-            xstream.alias("planet", Planet.class);
+            //xstream.alias("planet", Planet.class);
             xstream.alias("planets", List.class);
 
             Object result = xstream.fromXML(file);
@@ -179,6 +181,13 @@ public class PlanetSystemAPI implements ISerializer{
         return null;
     }
 
+    public Planet getPlanetByName(String name){
+        for (Planet planet : planetList){
+            if(name.equals(planet.getName()))
+                return planet;
+        } return null;
+    }
+
 
 
     // --------- Reporting Methods ----------
@@ -228,7 +237,7 @@ public class PlanetSystemAPI implements ISerializer{
     public String listAllPlanetObjectsHeavierThan(double mass) {
         StringBuilder sb = new StringBuilder();
         for (Planet p : planetList) {
-            if (p.getMass() >= mass) {
+            if (p.getMass() > mass) {
                 sb.append(p).append("\n");
             }
         }
@@ -238,7 +247,7 @@ public class PlanetSystemAPI implements ISerializer{
     public String listAllPlanetObjectsSmallerThan(double diameter) {
         StringBuilder sb = new StringBuilder();
         for (Planet p : planetList) {
-            if (p.getDiameter() <= diameter) {
+            if (p.getDiameter() < diameter) {
                 sb.append(p).append("\n");
             }
         }

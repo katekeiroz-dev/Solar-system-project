@@ -4,6 +4,7 @@ import controllers.PlanetSystemAPI;
 
 import models.GasPlanet;
 import models.IcePlanet;
+import models.Planet;
 import utils.ScannerInput;
 import utils.Utilities;
 
@@ -124,15 +125,15 @@ public class Driver {
                 break;
             // delete a planet
             case 2:
-                System.out.println("User pressed 2");
+                deletePlanet();
                 break;
             // list all planets
             case 3:
-                System.out.println("User pressed 3");
+                listAllPlanetBodies();
                 break;
             //update planet
             case 4:
-                System.out.println("User pressed 4");
+                //TODO
                 break;
 
             default:
@@ -176,7 +177,9 @@ public class Driver {
         boolean hw = Utilities.YNtoBoolean(hasLiquidWater);//to convert "Y/N" to true/false
         String gasOrIce =  ScannerInput.readNextLine("Is it part of the Ice or Gas planets? : ").toUpperCase();
 
-       // System.out.println(name + " " + surfaceType + diameter + hasLiquidWater + mass + avgTemp + gasOrIce);
+        if(!Utilities.isValidSurfaceType(surfaceType)) surfaceType = null;
+
+            // System.out.println(name + " " + surfaceType + diameter + hasLiquidWater + mass + avgTemp + gasOrIce);
 
         if (gasOrIce.equals("ICE")){
             String iceComp = ScannerInput.readNextLine("What is the ice composition? : ");
@@ -219,6 +222,18 @@ public class Driver {
         goBackToMainOrCrudMenu();
 
     }
+
+
+    private void deletePlanet(){
+        System.out.println("Please inform planet name :  ");
+        String name = ScannerInput.readNextLine("==>: ");
+        Planet p = planetAPI.getPlanetByName(name);
+        if (p!= null){
+            Planet p2 = planetAPI.deletePlanetId(p.getId());
+        }
+
+    }
+
 
     private void goBackToMainOrCrudMenu(){
         System.out.println("Please choose an option of the menu you would like to return : \n1) Main Menu \n2)Planets CRUD Menu");
@@ -303,7 +318,8 @@ public class Driver {
                 runReportsMenu();
                 break;
             case 1:
-                listAllPlanetSmallerThan();
+                double minimumDiameter = ScannerInput.readNextDouble("Enter minimum diameter:  ");
+                listAllPlanetSmallerThan(minimumDiameter);
                 break;
             case 2:
                 //  ask the user's input
@@ -343,8 +359,8 @@ public class Driver {
         return ScannerInput.readNextInt("==>> ");
     }
 
-    public void listAllPlanetSmallerThan() {
-
+    public void listAllPlanetSmallerThan(double d) {
+        System.out.println(planetAPI.listAllPlanetObjectsSmallerThan(d));
     }
 
 

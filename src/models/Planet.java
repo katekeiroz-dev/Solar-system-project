@@ -13,13 +13,22 @@ public abstract class Planet {
    private String name = null;
    private  double diameter = 0.5;
 
+    public Planet(){
+
+    }
     public Planet(String surfaceType,double averageTemperature,double mass,double diameter,String name,boolean hasLiquidWater){
+
         setSurfaceType(surfaceType);
         setAverageTemperature(averageTemperature);
-        setMass(mass);
-        setDiameter(diameter);
+        if(mass > 0.1) {
+            setMass(mass);
+        }
+        if(diameter > 0.5){
+            setDiameter(diameter);
+        }
+
         setName(name);
-        setHasLiquidWater(false);
+        setHasLiquidWater(hasLiquidWater);
 
         this.id = nextId++;
     }
@@ -62,9 +71,9 @@ public abstract class Planet {
 
     public void setSurfaceType(String surfaceType) {
 
-        if (Utilities.isValidSurfaceType(surfaceType)) {
+
             this.surfaceType = Utilities.truncateString(surfaceType, 20);
-        }
+
     }
 
     public double getAverageTemperature() {
@@ -88,9 +97,9 @@ public abstract class Planet {
     public void setMass(double mass) {
         //we only store values above 0.1. if it's lower than 0.1 we do nothing .
         // this way, we are only storing valid values.
-        if(mass > 0.1) {
+
             this.mass = mass;
-        }
+
 
     }
 
@@ -118,9 +127,9 @@ public abstract class Planet {
     }
 
     public void setDiameter(double diameter) {
-        if(diameter > 0.5){
+
             this.diameter = diameter;
-        }
+
 
     }
 

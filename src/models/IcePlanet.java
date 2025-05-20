@@ -6,9 +6,13 @@ import utils.Utilities;
 public class IcePlanet extends Planet {
     private String iceComposition = null;
 
+    public IcePlanet(){
+        super();
+    }
     public IcePlanet(String name, double mass, double diameter,  double averageTemperature, String surfaceType, boolean hasLiquidWater, String iceComposition)
     {
-        super(name,mass,diameter,averageTemperature,surfaceType,hasLiquidWater);// Call the constructor of the superclass Planet to initialize inherited properties
+
+        super(surfaceType,averageTemperature,mass,diameter,name,hasLiquidWater);// Call the constructor of the superclass Planet to initialize inherited properties
         // Initialize IcePlanet- specific properties
         this.iceComposition = iceComposition;
 
