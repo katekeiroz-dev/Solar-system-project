@@ -1,0 +1,195 @@
+
+Name : KATE KEIROZ
+Student Number: W20114857.
+---------------------------
+
+
+
+Reflection-
+
+Chronology of my implementation (what I did first, etc.. )
+
+------------- Date (08 /05/2025) -------------
+I started writing the code after reading the project specification again and highlighting the main points of the assignment.
+I began with the Driver class, where I created the mainMenu() method to print the initial user information, which includes
+the menu of options. I used the println() method to display the menu messages.
+Then, within the runMainMenu() method, I implemented a switch statement to handle the options selected by the user, which
+are scanned and chosen through the mainMenu() method.
+Lastly, I created a new class called PlanetObjectMenu. Within its constructor, I implemented messages to the user using
+println(). I also created a separate method to handle user input using the Scanner class.
+
+Challenges :
+
+The challenge I faced today was implementing a way for the user to return to the main menu without having to restart
+the program.
+
+What I learned :
+I reviewed the concepts of interfaces and inheritance to ensure they were properly implemented throughout the program.
+
+------------- Date (10 /05/2025) -------------
+Today, I successfully implemented part of secondary menu in the application, enhancing the user interface and navigation
+experience. In addition, I began developing the essential model abstract classes, Planet. Within this class, I defined
+its key fields to represent relevant attributes , and implemented the corresponding getter and setter methods to ensure
+proper encapsulation and data access. This marks a solid step forward in structuring the app's core functionality and
+data flow.
+
+Challenges :
+
+While working on the secondary menu logic, I encountered a specific challenge involving the use of a switch statement
+within an infinite loop. The issue centered around how to correctly handle case 0, which serves as an exit option,
+without unintentionally affecting the other switch cases (which handle CRUD operations).
+
+Initial Approach; At first, I considered placing a break statement after all the switch cases. However, I quickly
+realized that doing so would exit the infinite loop no matter which case the user choose. This is not the case , because
+I only wanted to exit the infinite loop in case 0.
+
+
+Final Solution & Reasoning; After analyzing the structure, I understood that case 0 behaves fundamentally differently
+from the rest—it requires breaking out of the infinite loop, whereas the other cases only perform CRUD operations
+and continue looping.
+
+To solve this, I isolated the logic for case 0 and placed a break statement that directly exits the loop when selected.
+This allows the program to cleanly exit while maintaining the integrity of the other operations.
+
+What I learned :
+Today, I deepened my understanding of how to write more functional and well-structured code. Specifically, I learned
+how to properly define a class in Java, using correct syntax and best practices for readability and maintainability.
+I also gained a clearer understanding of modifiers, which define the access level and behavior of classes and their
+members.
+These include:
+
+public, private, protected – for access control
+static – to indicate class-level members
+final – to prevent modification or inheritance
+abstract – to declare a class that cannot be instantiated
+By applying these concepts, I was able to make my codebase more organized, encapsulated, and aligned with
+object-oriented principles.
+
+
+
+
+------------- Date (13 /05/2025) -------------
+Today, I focused on refactoring and enhancing code structure for better maintainability and adherence to object-oriented
+principles.
+I started by refactoring the Planet class to remove previously hardcoded logic. Instead, I integrated utility methods
+from the Utilities class, which made the code cleaner and more modular. This allowed for reusable logic and improved
+validation without duplicating code manually.
+
+Next, I implemented the GasPlanet class. This class extends Planet and adds specific properties relevant to gas planets,
+such as gasComposition, coreComposition, and radiationLevel. I made sure to:
+Initialize inherited fields through the superclass constructor.
+Add validation logic in the setters using utility methods like Utilities.truncateString() and Utilities.validRange().
+
+Use the CoreCompositionUtility.isValidCoreType() method to ensure valid core composition input.
+Override two methods from the Planet class: displayInfo() and classifyBody(), showcasing polymorphism in action.
+All class members were kept encapsulated, and Java best practices were followed regarding method structure and access
+control.
+
+Challenges:
+One challenge was ensuring that previously hardcoded logic in the Planet class was cleanly and correctly replaced with
+utility method calls without breaking the existing class behavior. It required careful comparison
+and testing to maintain the expected functionality.
+
+What I Learned:
+Today, I revisited several object-oriented programming concepts including:
+Polymorphism: Specifically, how method overriding works when a subclass redefines a method from its superclass.
+Encapsulation and validation: How to ensure class integrity by controlling data through getters/setters and utility
+methods.
+Static vs non-static context: I reviewed the differences between static variables and methods, and how/when to use them
+appropriately in a utility context.
+
+------------- Date (14 /05/2025) -------------
+
+Today, I focused on improving the structure and reusability of the code in the Driver class, particularly around the
+menu systems. I realized that several blocks of logic—such as displaying menus or handling repeated menu options—could
+be abstracted into dedicated methods rather than being hardcoded. By refactoring these parts of the code, I made the
+Driver class cleaner, more modular, and easier to maintain.
+
+After that, I began working on the PlanetSystemAPI class in the controllers package. This involved setting up the class
+to manage the planet objects and defining the necessary logic to support CRUD operations from the main application.
+
+Challenges Faced:
+
+One key challenge I encountered was understanding how to implement XML file handling within the API. Since I intend
+to use XML for persistent data storage, I needed to familiarize myself with XML parsing in Java and how it integrates
+with serialization and file I/O. This required some additional reading and revision, especially regarding the use of
+interfaces and how they can be leveraged to standardize the save/load mechanisms across the system.
+
+What I Learned:
+
+Refactoring for Reusability: I saw firsthand how even small improvements in code structure, like moving hardcoded
+logic into helper methods, can greatly enhance readability and maintainability.
+Interfaces in Java: I deepened my understanding of Java interfaces and how they can enforce consistency across
+different implementations (e.g., for serialization).
+Working with XML Files: I began exploring how XML can be used for structured data storage in Java applications, and
+learned more about the parsing and writing process.
+Object-Oriented Best Practices: This work reinforced my knowledge of modularity, separation of concerns, and using
+utility classes to reduce code duplication.
+------------- Date (15 /05/2025) -------------
+
+Today I began by focusing on attention to the PlanetSystemAPI class, where I began implementing the logic for persisting
+planet data using XML. I created a method called addPlanetObject, which uses the XStream library to serialize Planet
+objects and write them to a file named planets.xml.
+While implementing this, I deepened my understanding of Java I/O operations and how checked exceptions like IOException
+need to be properly declared and handled. I also revisited the concept of aliases in XStream to control how objects are
+represented in XML.
+In conjunction with this, I expanded the addPlanet() method in the Driver class. This method now collects user input to
+construct either a generic planet or a specific type (like GasPlanet), based on user responses.
+If the user selects "GAS", the system prompts for additional attributes such as gas composition, core composition, and
+radiation level. The resulting GasPlanet object is then passed to planetAPI.addPlanetObject() for persistence.
+
+Challenges Faced
+One of the main challenges I encountered today was integrating XML file handling into the API layer. Understanding
+how XStream works for serializing objects, especially when appending to existing XML files, required additional
+research. Managing I/O exceptions and ensuring resources like FileWriter were properly closed also demanded attention.
+
+What I Learned
+-Refactoring for Reusability: Breaking down large methods into smaller, reusable units improves readability and
+supports easier maintenance.
+-Java I/O and XML: Gained practical experience with XML serialization in Java using XStream, and handling file
+operations with FileWriter.
+-Interfaces and Consistency: Started thinking ahead about using interfaces to enforce consistency in save/load methods
+across different planet types.
+-Robust Error Handling: Recognized the importance of catching and logging exceptions to prevent application crashes and
+aid in debugging.
+
+------------- Date (19 /05/2025) -------------
+
+Today I made significant progress in completing the PlanetSystemAPI class by fully implementing its core methods,
+including logic for persisting planet data using XML. I introduced the addPlanetObject method, which utilizes
+the XStream library to serialize Planet objects and write them to a planets.xml file. This involved learning how to
+ configure aliases in XStream to control XML output formatting, and deepening my understanding of Java I/O operations
+ and exception handling.
+
+As part of this work, I also expanded functionality in the Driver class. Specifically, I implemented Option 2 in the
+main menu, which allows users to add planets. I built a submenu that guides the user to Planet Overview, etc.
+
+Debugging and Challenges
+After wiring up the features, I began testing and debugging the application. I encountered a problem where not all
+planets were printing from the list as expected. Upon investigation, I discovered a flaw in the load() and save()
+methods. Specifically, the fromXML(file) function was returning an empty list. After some research and debugging,
+I identified the root cause: XStream was saving objects using their fully qualified class names (e.g., models.IcePlanet)
+rather than the expected aliases (e.g., <planet>). This happened because XStream did not recognize that subclasses
+like IcePlanet and GasPlanet should be treated as Planet objects unless explicitly told through alias configuration.
+
+What I Learned
+Java I/O and XML: Gained hands-on experience using XStream for object serialization and learned how to manage
+file operations effectively with FileWriter and exception handling.
+Debugging Practices: Understood the importance of step-by-step debugging to trace issues in data deserialization and
+file handling.
+Aliasing in XStream: Realized how critical proper aliasing is when working with inheritance in serialized XML structures.
+Refactoring for Reusability: Began breaking larger methods into smaller, reusable units for cleaner and more
+maintainable code.
+
+Interface-Driven Design: Started planning for the use of interfaces to standardize save/load behavior across different
+types of planet objects.
+
+Robust Error Handling: Emphasized the importance of catching, logging, and properly managing exceptions to ensure
+program stability.
+
+Overall, today's work not only brought me closer to completing core features of the application but also deepened my
+practical understanding of Java's I/O system, class design principles, and XML serialization challenges in real-world
+scenarios.
+
+------------- Date (20 /05/2025) -------------
+
