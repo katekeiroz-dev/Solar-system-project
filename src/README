@@ -29,6 +29,9 @@ complexity of planetary systems
 ***************************
 
 Part A - Inheritance Hierarchy (24 / 24)
+line 6 - icePlanet class, public class IcePlanet extends Planet
+line 6 - gasPlanet class, public class GasPlanet extends Planet
+
 -----------------------------
 
 Planets (10/10)

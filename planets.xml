@@ -1,11 +1,13 @@
 <planets>
-  <icePlanet>
+  <gasPlanet>
     <id>1000</id>
     <hasLiquidWater>true</hasLiquidWater>
-    <averageTemperature>22.0</averageTemperature>
-    <mass>22.0</mass>
-    <name>oo</name>
-    <diameter>11.0</diameter>
-    <iceComposition>ws</iceComposition>
-  </icePlanet>
+    <averageTemperature>11.0</averageTemperature>
+    <mass>11.0</mass>
+    <name>terra</name>
+    <diameter>22.0</diameter>
+    <gasComposition>kk</gasComposition>
+    <coreComposition>kk</coreComposition>
+    <radiationLevel>22.0</radiationLevel>
+  </gasPlanet>
 </planets>

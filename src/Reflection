@@ -191,5 +191,19 @@ Overall, today's work not only brought me closer to completing core features of 
 practical understanding of Java's I/O system, class design principles, and XML serialization challenges in real-world
 scenarios.
 
-------------- Date (20 /05/2025) -------------
+------------- Date (21 /05/2025) -------------
 
+I have found a bug in the load method from planetSystemAPI class. My implementation was not correctly desserializing
+the XML responsible for storing the planets. it consisted in two main issues :
+- First , i was testing with XML containing only one planet. after debugging , I noticed that my implementation expected
+a list, but since I was testing with only one planet, it was not working properly .
+After searching the web thoroughly , I found that the solution  was to indicate to xstream that the content of the child
+tags were members of a list .
+- It was still not working though ,so I debugged further and noticed that the code was throwing an execption when calling
+.fromXML (a method from xstream). I was not printing the stack trace , after I printed  I realised that it was throwing
+ForbiddenClassExeception. Again , it was lacking internal settings that xstream required  .
+The solution was :
+1) Create a wrapper for planet list(PlanetContainer class)
+2) Set default security mode for xstream
+3) use allowTypesByWildcard method , allowing all classes from models package.
+4) Adapt the remaining of load method to this new structure

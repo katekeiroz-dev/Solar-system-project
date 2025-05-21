@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import models.GasPlanet;
 import models.IcePlanet;
 import models.Planet;
+import models.PlanetContainer;
 import utils.ISerializer;
 
 import java.io.File;
@@ -17,141 +18,125 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * The PlanetSystemAPI class provides CRUD operations, reporting, validation, sorting,
+ * and persistence methods for managing a list of planets including IcePlanets and GasPlanets.
+ * It implements the {@link utils.ISerializer} interface to allow serialization/deserialization of planet data.
+ */
+public class PlanetSystemAPI implements ISerializer {
 
-//This means the class PlanetSystemAPI is implementing an interface called ISerializer.
-//An interface in Java defines methods that a class must implement—but it doesn't provide the actual implementation.
-//So, PlanetSystemAPI must provide concrete implementations of all methods defined in the ISerializer interface.
-public class PlanetSystemAPI implements ISerializer{
-
-
-
+    /** File object for handling persistence. */
     private File file = null;
+
+    /** List that stores all planet objects. */
     private List<Planet> planetList = new ArrayList<>();
 
-
-    //throws Exception means the method might throw an Exception (an error) that must be handled
+    /**
+     * Loads planet data from the XML file using XStream.
+     *
+     * @throws Exception if there is an error during file reading or deserialization.
+     */
     @Override
     public void load() throws Exception {
-
-
         File file = new File("planets.xml");
 
         if (file.exists()) {
-            //What is DomDriver() in XStream?
-            //DomDriver is one of the XML parsers used by XStream to read and write XML.
-            //tells XStream to use DOM (Document Object Model) for parsing and generating XML. It creates an internal
-            // tree structure of the XML document — kind of like a full in-memory representation — which makes it
-            // easier to navigate and manipulate
             XStream xstream = new XStream(new DomDriver());
             xstream.autodetectAnnotations(true);
-
-
-            // Aliases must match what was used in save()
+            XStream.setupDefaultSecurity(xstream);
+            xstream.allowTypesByWildcard(new String[]{"models.*"});
+            xstream.alias("planets", PlanetContainer.class);
             xstream.alias("icePlanet", IcePlanet.class);
             xstream.alias("gasPlanet", GasPlanet.class);
-            //xstream.alias("planet", Planet.class);
-            xstream.alias("planets", List.class);
+            xstream.addImplicitCollection(PlanetContainer.class, "planets");
 
             Object result = xstream.fromXML(file);
-
-            if (result instanceof List<?>) {
-                this.planetList = (List<Planet>) result;
-
-
-                // Debugging
-                // It checks if the list is empty (has no planets)
-                // if yes: (That means the XML didn't load any planets.)
-            /*
-            if (planetList.isEmpty()) {
-                System.out.println("[DEBUG] planetList is empty.");
-            } else { // Otherwise (if the list is not empty), it prints out the number of planets and each one
-                System.out.println("[DEBUG] Loaded " + planetList.size() + " planets:");
-                for (Planet p : planetList) {
-                    System.out.println("[DEBUG] " + p); // it prints each planet in the list
-                }
-            }
-            */
-            //} else {
-                // If the data loaded from the file is not a List, this prints an error message.
-                // This helps you know that the XML file is structured wrong or corrupted
-                // System.err.println("[DEBUG] Unexpected XML structure");
+            if (result instanceof PlanetContainer) {
+                PlanetContainer container = (PlanetContainer) result;
+                this.planetList = container.getPlanets();
             }
         } else {
             System.err.println("File 'planets.xml' not found.");
         }
     }
 
+    /**
+     * Saves the current planet list to an XML file using XStream.
+     *
+     * @throws Exception if an I/O error occurs.
+     */
     @Override
-    public void save() throws Exception {File file = new File("planets.xml");
-
+    public void save() throws Exception {
+        File file = new File("planets.xml");
         XStream xstream = new XStream(new DomDriver());
 
-        // Aliases for subclasses of Planet
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypesByWildcard(new String[]{"models.*"});
+        xstream.autodetectAnnotations(true);
+        xstream.alias("planets", PlanetContainer.class);
         xstream.alias("icePlanet", IcePlanet.class);
         xstream.alias("gasPlanet", GasPlanet.class);
-        xstream.alias("planet", Planet.class);   // optional
-        xstream.alias("planets", List.class);    // root tag
+        xstream.addImplicitCollection(PlanetContainer.class, "planets");
+        xstream.setMode(XStream.NO_REFERENCES);
 
-        xstream.setMode(XStream.NO_REFERENCES);  // optional: cleaner XML
+        PlanetContainer container = new PlanetContainer();
+        container.setPlanets(this.planetList);
 
-        xstream.toXML(planetList, new FileWriter(file));
+        xstream.toXML(container, new FileWriter(file));
     }
 
-
+    /**
+     * Returns the name of the file used for persistence.
+     *
+     * @return file name as a String.
+     */
     @Override
     public String fileName() {
-
-
         return "";
     }
 
-    //----------- CRUD Methods ------------------
+    // ------------------- CRUD METHODS -------------------
 
-    //the IOException is an exception to the IO operation , different from others.
-    // Exception is the most general one.
-    // This informs that this method may throw an IO exception
-    public boolean addPlanetObject(Planet planet) throws IOException{
+    /**
+     * Gets the list of all planets.
+     *
+     * @return list of planets.
+     */
+    public List<Planet> getPlanetList() {
+        return planetList;
+    }
 
+    /**
+     * Adds a new planet to the list.
+     *
+     * @param planet the Planet object to add.
+     * @return false (unused return, could be improved).
+     * @throws IOException if an I/O error occurs.
+     */
+    public boolean addPlanetObject(Planet planet) throws IOException {
         planetList.add(planet);
-
         return false;
     }
 
-
-
-         /*
-         This is the return type — it returns a Planet object.
-        deletePlanetIndex: This is the method name —
-        it suggests that the method deletes a planet at a specified index.
-        (int index): This is the parameter — an integer specifying the position in the list where
-        the planet should be deleted.
-          */
+    /**
+     * Deletes a planet at a given index.
+     *
+     * @param index the index of the planet to delete.
+     * @return the removed planet or null if index is invalid.
+     */
     public Planet deletePlanetIndex(int index) {
         if (index >= 0 && index < planetList.size()) {
-            /*
-            If the index is valid, it removes the planet at that index from the planetList.
-            It also returns the removed Planet object
-             */
             return planetList.remove(index);
         }
         return null;
     }
 
-/*
-
-
-    public Planet deletePlanetId(int id) {
-        for (Planet planet : planetList) {//This loops through each Planet object in the planetList
-            if (planet.getId() == id) { //Checks if the current planet's ID matches the one given.
-                planetList.remove(planet); //The planet is removed from the list.
-                //The removed planet is returned immediately.
-                return planet; //If no planet with the matching ID is found after the loop finishes, null is returned.
-            }
-        }
-        return null;
-    }
- */
-
+    /**
+     * Deletes a planet by its ID.
+     *
+     * @param id the ID of the planet.
+     * @return the removed planet or null if not found.
+     */
     public Planet deletePlanetId(int id) {
         Iterator<Planet> iterator = planetList.iterator();
         while (iterator.hasNext()) {
@@ -164,7 +149,12 @@ public class PlanetSystemAPI implements ISerializer{
         return null;
     }
 
-
+    /**
+     * Retrieves a planet by its index.
+     *
+     * @param index the index in the list.
+     * @return the corresponding Planet or null if not found.
+     */
     public Planet getPlanetByIndex(int index) {
         if (index >= 0 && index < planetList.size()) {
             return planetList.get(index);
@@ -172,6 +162,12 @@ public class PlanetSystemAPI implements ISerializer{
         return null;
     }
 
+    /**
+     * Retrieves a planet by its ID.
+     *
+     * @param id the ID of the planet.
+     * @return the corresponding Planet or null if not found.
+     */
     public Planet getPlanetById(int id) {
         for (Planet planet : planetList) {
             if (planet.getId() == id) {
@@ -181,24 +177,29 @@ public class PlanetSystemAPI implements ISerializer{
         return null;
     }
 
-    public Planet getPlanetByName(String name){
-        for (Planet planet : planetList){
-            if(name.equals(planet.getName()))
+    /**
+     * Retrieves a planet by its name.
+     *
+     * @param name the name of the planet.
+     * @return the corresponding Planet or null if not found.
+     */
+    public Planet getPlanetByName(String name) {
+        for (Planet planet : planetList) {
+            if (name.equals(planet.getName()))
                 return planet;
-        } return null;
+        }
+        return null;
     }
 
+    // ------------------- REPORTING METHODS -------------------
 
-
-    // --------- Reporting Methods ----------
-
+    /**
+     * Lists all planets with their index and string representation.
+     *
+     * @return formatted string list of all planets.
+     */
     public String listAllPlanetBodies() {
         if (planetList.isEmpty()) return "No Planets";
-        // String is immutable, meaning every time you concatenate with +, a new String object is created.This wastes
-        // memory and slows things down when looping a lot.
-        //So when we use StringBuilder when you're building up a string in a loop. It avoids performance issues caused by
-        // repeatedly creating and discarding String objects
-        //It builds the string in one place — in a buffer — without creating new string objects every time.
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < planetList.size(); i++) {
             sb.append(i).append(": ").append(planetList.get(i)).append("\n");
@@ -206,10 +207,11 @@ public class PlanetSystemAPI implements ISerializer{
         return sb.toString();
     }
 
-    //This method returns a list of all gas planets from the main list, with their index and name.
-    //It uses instanceof to filter by type.
-    //It keeps the original index to help identify or reference planets.
-    //Returns "No Gas Planets" if none are found.
+    /**
+     * Lists all gas planets.
+     *
+     * @return formatted string list of gas planets or a message if none exist.
+     */
     public String listAllGasPlanets() {
         StringBuilder sb = new StringBuilder();
         int index = 0;
@@ -222,6 +224,11 @@ public class PlanetSystemAPI implements ISerializer{
         return sb.isEmpty() ? "No Gas Planets" : sb.toString();
     }
 
+    /**
+     * Lists all ice planets.
+     *
+     * @return formatted string list of ice planets or a message if none exist.
+     */
     public String listAllIcePlanets() {
         StringBuilder sb = new StringBuilder();
         int index = 0;
@@ -234,6 +241,12 @@ public class PlanetSystemAPI implements ISerializer{
         return sb.isEmpty() ? "No Ice Planets" : sb.toString();
     }
 
+    /**
+     * Lists planets with mass greater than a given value.
+     *
+     * @param mass the minimum mass.
+     * @return list or message if none match.
+     */
     public String listAllPlanetObjectsHeavierThan(double mass) {
         StringBuilder sb = new StringBuilder();
         for (Planet p : planetList) {
@@ -244,6 +257,12 @@ public class PlanetSystemAPI implements ISerializer{
         return sb.isEmpty() ? "No Planet heavier than " + mass : sb.toString();
     }
 
+    /**
+     * Lists planets with diameter smaller than a given value.
+     *
+     * @param diameter the maximum diameter.
+     * @return list or message if none match.
+     */
     public String listAllPlanetObjectsSmallerThan(double diameter) {
         StringBuilder sb = new StringBuilder();
         for (Planet p : planetList) {
@@ -254,12 +273,22 @@ public class PlanetSystemAPI implements ISerializer{
         return sb.isEmpty() ? "No Planet smaller than " + diameter : sb.toString();
     }
 
+    // ------------------- COUNTING METHODS -------------------
 
-    // --------- number methods/ count method ---------
+    /**
+     * Returns the number of planets.
+     *
+     * @return planet count.
+     */
     public int numberOfPlanetBodies() {
         return planetList.size();
     }
 
+    /**
+     * Counts how many planets are gas planets.
+     *
+     * @return count of gas planets.
+     */
     public int numberOfGasPlanets() {
         int count = 0;
         for (Planet p : planetList) {
@@ -268,6 +297,11 @@ public class PlanetSystemAPI implements ISerializer{
         return count;
     }
 
+    /**
+     * Counts how many planets are ice planets.
+     *
+     * @return count of ice planets.
+     */
     public int numberOfIcePlanets() {
         int count = 0;
         for (Planet p : planetList) {
@@ -276,11 +310,14 @@ public class PlanetSystemAPI implements ISerializer{
         return count;
     }
 
+    // ------------------- VALIDATION METHODS -------------------
 
-
-
-    //---------------- validation method -------------------------
-
+    /**
+     * Checks if an ID is unique (not already used).
+     *
+     * @param id the ID to check.
+     * @return true if ID is unique.
+     */
     public boolean isValidId(int id) {
         for (Planet p : planetList) {
             if (p.getId() == id) return false;
@@ -288,12 +325,25 @@ public class PlanetSystemAPI implements ISerializer{
         return true;
     }
 
+    /**
+     * Checks if the index is within bounds.
+     *
+     * @param index the index to check.
+     * @return true if valid.
+     */
     public boolean isValidIndex(int index) {
         return index >= 0 && index < planetList.size();
     }
 
-    //-------- Update Methods -------------------------------
+    // ------------------- UPDATE METHODS -------------------
 
+    /**
+     * Updates an ice planet with new details by ID.
+     *
+     * @param id the ID of the planet.
+     * @param updatedDetails the new IcePlanet object.
+     * @return the updated planet or null if not found.
+     */
     public Planet updateIcePlanet(int id, IcePlanet updatedDetails) {
         for (int i = 0; i < planetList.size(); i++) {
             Planet p = planetList.get(i);
@@ -305,6 +355,13 @@ public class PlanetSystemAPI implements ISerializer{
         return null;
     }
 
+    /**
+     * Updates a gas planet with new details by ID.
+     *
+     * @param id the ID of the planet.
+     * @param updatedDetails the new GasPlanet object.
+     * @return the updated planet or null if not found.
+     */
     public Planet updateGasPlanet(int id, GasPlanet updatedDetails) {
         for (int i = 0; i < planetList.size(); i++) {
             Planet p = planetList.get(i);
@@ -316,32 +373,35 @@ public class PlanetSystemAPI implements ISerializer{
         return null;
     }
 
+    // ------------------- SORT METHODS -------------------
 
-    //TODO - delete methods
-
-
-
-    //---------------- sort methods ----------------------------
-
-    //Because the diameter is a double (a decimal number), this method(COMPARATOR) is made to compare those numbers efficiently.
+    /**
+     * Sorts the planet list by diameter in ascending order.
+     */
     public void sortByDiameterAscending() {
-        planetList.sort(Comparator.comparingDouble(Planet::getDiameter)); //:: is just a concise way to refer to a method
-        // instead of writing a full lambda expression -> etc
+        planetList.sort(Comparator.comparingDouble(Planet::getDiameter));
     }
 
-
-    //This method swaps two planets in a list — it switches their positions.
+    /**
+     * Swaps two planets in the list.
+     *
+     * @param list the list of planets.
+     * @param i index of the first planet.
+     * @param j index of the second planet.
+     */
     private void swapPlanet(List<Planet> list, int i, int j) {
         Planet temp = list.get(i);
-        list.set(i, list.get(j)); //Replaces the planet at index i with the planet at index j.
-        list.set(j, temp); //Puts the planet we saved in temp (originally at i) into index j
+        list.set(i, list.get(j));
+        list.set(j, temp);
     }
 
+    // ------------------- TOP 5 METHODS -------------------
 
-
-
-    //---------------- Top 5 methods ---------------------------------
-
+    /**
+     * Lists top 5 gas planets with highest radiation levels.
+     *
+     * @return formatted string list.
+     */
     public String topFiveHighestRadiationGasPlanet() {
         return planetList.stream()
                 .filter(p -> p instanceof GasPlanet)
@@ -352,6 +412,11 @@ public class PlanetSystemAPI implements ISerializer{
                 .collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Lists top 5 largest planets by diameter.
+     *
+     * @return formatted string list.
+     */
     public String topFiveBiggestPlanet() {
         return planetList.stream()
                 .sorted(Comparator.comparingDouble(Planet::getDiameter).reversed())
@@ -359,6 +424,4 @@ public class PlanetSystemAPI implements ISerializer{
                 .map(Object::toString)
                 .collect(Collectors.joining("\n"));
     }
-
-
-}   
+}

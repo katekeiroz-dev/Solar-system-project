@@ -84,12 +84,52 @@ public class Driver {
                 break;
                 // search planet case
             case 3:
-                String s = planetAPI.listAllPlanetBodies();
+                System.out.println("How would like to search?: ");
+                System.out.println("1. Total number of planet bodies");
+                System.out.println("2. Number of gas planets");
+                System.out.println("3. Number of ice planets");
+
+                int countChoice = ScannerInput.readNextInt("Enter your choice (1-3): ");
+
+                int countResult;
+                switch (countChoice) {
+                    case 1:
+                        countResult = planetAPI.numberOfPlanetBodies();
+                        System.out.println("Total number of planet bodies: " + countResult);
+                        break;
+                    case 2:
+                        countResult = planetAPI.numberOfGasPlanets();
+                        System.out.println("Number of gas planets: " + countResult);
+                        break;
+                    case 3:
+                        countResult = planetAPI.numberOfIcePlanets();
+                        System.out.println("Number of ice planets: " + countResult);
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                        break;
+                }
+
                 runMainMenu();
                 break;
-                //sort planet case
             case 4:
+                // Ask the user for a minimum diameter
+                double minDiameter = ScannerInput.readNextDouble("Enter minimum diameter to filter and sort: ");
+
+                // Sort the full list first
                 planetAPI.sortByDiameterAscending();
+
+                // Filter and display only those that match the criteria
+                StringBuilder filtered = new StringBuilder();
+                for (Planet p : planetAPI.getPlanetList()) {
+                    if (p.getDiameter() >= minDiameter) {
+                        filtered.append(p).append("\n");
+                    }
+                }
+
+                // Show results
+                System.out.println(filtered.isEmpty() ? "No planets found with diameter >= " + minDiameter : filtered.toString());
+
                 runMainMenu();
                 break;
                 //save all case
@@ -133,8 +173,89 @@ public class Driver {
                 break;
             //update planet
             case 4:
-                //TODO
+                System.out.println("Which type of planet do you want to update?");
+                System.out.println("1. Ice Planet");
+                System.out.println("2. Gas Planet");
+                int updateChoice = ScannerInput.readNextInt("Enter your choice (1 or 2): ");
+
+                int idToUpdate = ScannerInput.readNextInt("Enter the ID of the planet to update: ");
+
+                switch (updateChoice) {
+                    case 1:
+                        // Gather updated details for IcePlanet
+                        String iceName = ScannerInput.readNextLine("Enter new name: ");
+                        double iceMass = ScannerInput.readNextDouble("Enter new mass: ");
+                        double iceDiameter = ScannerInput.readNextDouble("Enter new diameter: ");
+                        double iceTemp = ScannerInput.readNextDouble("Enter new average temperature: ");
+                        String iceSurfaceType = ScannerInput.readNextLine("Enter new surface type: ");
+
+                        char iceWaterInput = ScannerInput.readNextChar("Does it have liquid water? (Y/N): ");
+                        boolean iceHasWater = Utilities.YNtoBoolean(iceWaterInput);
+                        String iceComposition = ScannerInput.readNextLine("Enter ice composition: ");
+
+                        IcePlanet updatedIce = new IcePlanet(
+                                iceName,
+                                iceMass,
+                                iceDiameter,
+                                iceTemp,
+                                iceSurfaceType,
+                                iceHasWater,
+                                iceComposition
+                        );
+                        updatedIce.setId(idToUpdate);  // Preserve the ID
+                        Planet updatedIceResult = planetAPI.updateIcePlanet(idToUpdate, updatedIce);
+
+                        if (updatedIceResult != null) {
+                            System.out.println(" Ice planet updated successfully:");
+                            System.out.println(updatedIceResult);
+                        } else {
+                            System.out.println(" No Ice Planet found with ID " + idToUpdate);
+                        }
+                        break;
+
+                    case 2:
+                        // Gather updated details for GasPlanet
+                        String gasName = ScannerInput.readNextLine("Enter new name: ");
+                        double gasMass = ScannerInput.readNextDouble("Enter new mass: ");
+                        double gasDiameter = ScannerInput.readNextDouble("Enter new diameter: ");
+                        double gasTemp = ScannerInput.readNextDouble("Enter new average temperature: ");
+                        String gasSurfaceType = ScannerInput.readNextLine("Enter new surface type: ");
+                        char gasHasWater = ScannerInput.readNextChar("Does it have liquid water? (Y/N): ");
+                        boolean gw = Utilities.YNtoBoolean(gasHasWater);
+                        String gasComposition = ScannerInput.readNextLine("Enter gas composition: ");
+                        String coreComposition = ScannerInput.readNextLine("Enter core composition: ");
+                        double radiationLevel = ScannerInput.readNextDouble("Enter radiation level: ");
+
+                        GasPlanet updatedGas = new GasPlanet(
+                                gasName,
+                                gasMass,
+                                gasDiameter,
+                                gasTemp,
+                                gasSurfaceType,
+                                gw,
+                                gasComposition,
+                                coreComposition,
+                                radiationLevel
+                        );
+                        updatedGas.setId(idToUpdate);  // Preserve the ID
+                        Planet updatedGasResult = planetAPI.updateGasPlanet(idToUpdate, updatedGas);
+
+                        if (updatedGasResult != null) {
+                            System.out.println(" Gas planet updated successfully:");
+                            System.out.println(updatedGasResult);
+                        } else {
+                            System.out.println("⚠ No Gas Planet found with ID " + idToUpdate);
+                        }
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice. Please select 1 or 2.");
+                        break;
+                }
+
+                runPlanetAPIMenu();
                 break;
+
 
             default:
                 System.out.println("Invalid option. Please choose one of the following options:(1, 2, 3, 4, 0).");
@@ -264,7 +385,7 @@ public class Driver {
 
         }
         catch (Exception e){
-
+            e.printStackTrace();
         }
 
     }
@@ -275,6 +396,7 @@ public class Driver {
 
         }
         catch (Exception e){
+            e.printStackTrace();
 
         }
 
@@ -386,15 +508,6 @@ public class Driver {
 
 
 
-
-    //todo update methods counting methods
-
-
-    //---------------------
-    //  General Menu Items
-    //---------------------
-
-//TODO - write all the methods that are called from your menu
     //---------------------
     //  Search/Sort
     //---------------------
