@@ -1,4 +1,7 @@
-Brief description:
+Brief description::
+--
+
+
 =================
 This assignment involves designing and implementing a Java program that models celestial bodies within a planetary
 system using object-oriented programming principles. The program features a class hierarchy rooted in the abstract base
