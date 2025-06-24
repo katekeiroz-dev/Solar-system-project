@@ -1,7 +1,7 @@
 Brief description::
 --
 
-
+=
 =================
 
 This assignment involves designing and implementing a Java program that models celestial bodies within a planetary
@@ -97,3 +97,5 @@ Integers in ascending order: https://www.youtube.com/watch?v=86B5U15c88w
 
 Resources used to help me understand the sintaxe of Java ArrayList:
 https://www.w3schools.com/java/java_arraylist.asp
+
+=====
